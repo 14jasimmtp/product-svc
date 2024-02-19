@@ -8,8 +8,8 @@ type StockDecreaseLog struct {
 
 type Product struct {
 	ID                int64            `json:"id" gorm:"primaryKey"`
-	Name              string           `json:"name"`
-	Price             int64            `json:"price"`
-	Stock             int64            `json:"stock"`
+	Name              string           `json:"name" gorm:"name"`
+	Price             int64            `json:"price" gorm:"price"`
+	Stock             int64            `json:"stock" gorm:"stock"`
 	StockDecreaseLogs StockDecreaseLog `gorm:"foreignKey:ProductRefer"`
 }
