@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/14jasimmtp/product-svc/pkg/db"
@@ -43,7 +44,7 @@ func (s *Server) FindOne(c context.Context, req *pb.FindOneRequest) (*pb.FindOne
 			Error:  result.Error.Error(),
 		}, nil
 	}
-
+	fmt.Println(product.Stock)
 	data := &pb.FindOneData{
 		Id:    product.ID,
 		Name:  product.Name,
@@ -76,23 +77,23 @@ func (s *Server) DecreaseStock(c context.Context, req *pb.DecreaseStockRequest) 
 
 	var log models.StockDecreaseLog
 
-    if result := s.H.DB.Where(&models.StockDecreaseLog{OrderId: req.OrderId}).First(&log); result.Error == nil {
-        return &pb.DecreaseStockResponse{
-            Status: http.StatusConflict,
-            Error:  "Stock already decreased",
-        }, nil
-    }
+	if result := s.H.DB.Where(&models.StockDecreaseLog{OrderId: req.OrderId}).First(&log); result.Error == nil {
+		return &pb.DecreaseStockResponse{
+			Status: http.StatusConflict,
+			Error:  "Stock already decreased",
+		}, nil
+	}
 
 	product.Stock = product.Stock - 1
 
-    s.H.DB.Save(&product)
+	s.H.DB.Save(&product)
 
-    log.OrderId = req.OrderId
-    log.ProductRefer = product.ID
+	log.OrderId = req.OrderId
+	log.ProductRefer = product.ID
 
-    s.H.DB.Create(&log)
+	s.H.DB.Create(&log)
 
-    return &pb.DecreaseStockResponse{
-        Status: http.StatusOK,
-    }, nil
+	return &pb.DecreaseStockResponse{
+		Status: http.StatusOK,
+	}, nil
 }
