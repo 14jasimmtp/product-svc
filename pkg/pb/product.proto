@@ -10,7 +10,6 @@ service ProductService {
   rpc DecreaseStock(DecreaseStockRequest) returns (DecreaseStockResponse) {}
 }
 
-// CreateProduct
 
 message CreateProductRequest {
   string name = 1;
@@ -25,12 +24,10 @@ message CreateProductResponse {
   int64 id = 3;
 }
 
-// FindOne
 
 message FindOneData {
   int64 id = 1;
   string name = 2;
-  string sku = 3;
   int64 stock = 4;
   int64 price = 5;
 }
@@ -43,7 +40,6 @@ message FindOneResponse {
   FindOneData data = 3;
 }
 
-// DecreaseStock
 
 message DecreaseStockRequest {
   int64 id = 1;

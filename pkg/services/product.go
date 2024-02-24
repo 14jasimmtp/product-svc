@@ -35,6 +35,8 @@ func (s *Server) CreateProduct(c context.Context, req *pb.CreateProductRequest) 
 	}, nil
 }
 
+
+
 func (s *Server) FindOne(c context.Context, req *pb.FindOneRequest) (*pb.FindOneResponse, error) {
 	var product models.Product
 
@@ -48,8 +50,8 @@ func (s *Server) FindOne(c context.Context, req *pb.FindOneRequest) (*pb.FindOne
 	data := &pb.FindOneData{
 		Id:    product.ID,
 		Name:  product.Name,
-		Stock: product.Stock,
 		Price: product.Price,
+		Stock: product.Stock,
 	}
 
 	return &pb.FindOneResponse{
