@@ -30,7 +30,6 @@ func main() {
 	s := services.Server{
 		H: h,
 	}
-
 	grpcServer := grpc.NewServer()
 	pb.RegisterProductServiceServer(grpcServer, &s)
 
